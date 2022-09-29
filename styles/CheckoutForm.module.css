@@ -1,0 +1,23 @@
+.checkoutFormContainer {
+  height: 95vh;
+  width: 100%;
+}
+.submitBtn {
+  width: 100%;
+  height: 100px;
+}
+.flexInputs {
+  justify-content: space-around !important;
+}
+.paymentInput {
+  height: 40px;
+  width: 60%;
+  background: whitesmoke;
+  border: none;
+  border-bottom: 2px solid black;
+  color: black;
+  font-size: 15px;
+}
+#city {
+  width: 100% !important;
+}

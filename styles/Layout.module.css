@@ -1,0 +1,19 @@
+.layoutContainer {
+  height: 100%;
+  width: 100%;
+}
+.flexCent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.flexCentCol {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.contentContainer {
+  height: 100%;
+  width: 100%;
+}

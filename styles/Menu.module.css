@@ -1,0 +1,9 @@
+.menuContainer {
+  background: whitesmoke;
+  height: 650px;
+  width: 80%;
+  flex-wrap: wrap;
+  border-top: 2px solid rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  overflow-y: auto;
+}

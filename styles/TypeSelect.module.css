@@ -1,0 +1,8 @@
+.selectionContainer {
+  height: 90%;
+  width: 60%;
+  flex-wrap: wrap;
+}
+.clearIt {
+  width: 100%;
+}

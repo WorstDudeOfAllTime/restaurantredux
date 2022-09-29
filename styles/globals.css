@@ -4,6 +4,9 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background: rgb(149, 147, 255);
+  height: 100%;
+  width: 100%;
 }
 
 a {
@@ -21,6 +24,42 @@ a {
   }
   body {
     color: white;
-    background: black;
+  }
+}
+.flexCent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.flexCentCol {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.half {
+  height: 100%;
+  width: 50%;
+}
+.pageLeft {
+  height: 100%;
+  width: 100%;
+  background: rgb(231, 231, 231);
+}
+.pageRight {
+  height: 100%;
+  width: 100%;
+  background: rgb(149, 147, 255);
+}
+.fadeIn {
+  animation-name: fadeIn;
+  animation-duration: 1s;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 100%;
   }
 }

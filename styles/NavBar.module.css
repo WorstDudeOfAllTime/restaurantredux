@@ -1,0 +1,29 @@
+.navBox {
+  height: 10%;
+  width: 90%;
+  background: rgb(149, 147, 255);
+}
+.logoSide {
+  height: 100%;
+  width: 40%;
+  font-size: 12px;
+  justify-content: space-around !important;
+}
+.navSide {
+  height: 100%;
+  width: 60%;
+}
+#navList {
+  justify-content: space-around !important;
+}
+.navItem {
+  text-decoration: none;
+  cursor: pointer;
+}
+.shoppingCart {
+  cursor: pointer;
+}
+.logo {
+  font-size: 20px;
+  cursor: pointer;
+}

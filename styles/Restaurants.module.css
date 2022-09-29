@@ -1,0 +1,8 @@
+.restaurantsContainer {
+  height: 95vh;
+  width: 100vw;
+}
+.cardList {
+  overflow: hidden;
+  overflow-y: auto;
+}

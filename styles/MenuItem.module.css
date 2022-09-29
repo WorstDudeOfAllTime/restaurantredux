@@ -1,0 +1,36 @@
+.menuItemContainer {
+  height: 120px;
+  width: 35%;
+  background: rgb(149, 147, 255);
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  margin: 5px 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.menuItemContainer:hover {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 1);
+  transition: 0.2s;
+}
+.menuItemLeft {
+  align-items: flex-start !important;
+}
+.menuItemRight {
+  justify-content: flex-end !important;
+}
+.foodImage {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  justify-content: flex-end !important;
+  align-items: flex-start !important;
+}
+.priceBox {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background-color: rgba(245, 245, 245, 0.75);
+  color: black;
+  font-size: 15px;
+  font-weight: bold;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+}
