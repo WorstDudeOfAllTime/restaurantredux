@@ -12,7 +12,6 @@ const CheckoutForm = () => {
   const [theCVC, setTheCVC] = useState("");
 
   const submitPayment = async () => {
-    console.log("Fired");
     try {
       fetch("http://localhost:5000/sendPayment", {
         method: "POST",
@@ -30,6 +29,13 @@ const CheckoutForm = () => {
           theCVC,
         }),
       });
+      setCardName("");
+      setTheCardNumber("");
+      setTheState("");
+      setTheCity("");
+      setTheAddress("");
+      setTheZipcode("");
+      setTheCVC("")
     } catch (err) {
       console.log(err);
     }
