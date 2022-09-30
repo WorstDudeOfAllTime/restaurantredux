@@ -13,7 +13,6 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { getDatabase, ref, set } from "firebase/database";
 import { generateSlug } from "random-word-slugs";
 import BodyParser from "body-parser";
 import Stripe from "stripe";
@@ -21,6 +20,7 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 import { burp } from "burrp";
 // ------------- //
@@ -192,24 +192,37 @@ app.post("/loginUser", async (req, res) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(`${errorCode} ${errorMessage}`);
+        res.send(errorMessage);
       });
+  } catch (err) {}
+});
+
+app.get("/signOutUser", async (req, res) => {
+  try {
+    const auth = getAuth();
+    signOut(auth)
+      .then(() => {
+        console.log("You have signed out.");
+      })
+      .catch(error);
   } catch (err) {}
 });
 
 app.post("/sendPayment", async (req, res) => {
   try {
+    console.log("Fired");
     const token = await stripe.tokens.create({
       card: {
         number: "4242424242424242",
         exp_month: "12",
         exp_year: "25",
-        cvc: req.body.cvc,
+        cvc: req.body.theCVC,
       },
     });
     stripe.customers
       .create({
         name: req.body.name,
-        email: "test@gmail.com",
+        email: req.body.email,
         source: token.id,
       })
       .then((customer) => {
@@ -223,12 +236,12 @@ app.post("/sendPayment", async (req, res) => {
       .catch((err) => console.log(err));
 
     let addOrder = await addDoc(collection(database, "Orders"), {
-      name: req.body.name,
+      name: req.body.email,
       amount: 400,
       restaraunt: req.body.restaurant,
       dishes: ["this", "That"],
       card: "4242 4242 4242 4242",
-      address: "This House",
+      address: req.body.theAddress,
       date: new Date(),
     });
   } catch (err) {
