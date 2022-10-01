@@ -14,9 +14,9 @@ const firebaseConfig = {
   appId: "1:986340391104:web:29f171d3ad12f50c8fd525",
 };
 const firebaseApp = initializeApp(firebaseConfig);
-
 const imageSrc =
   "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80";
+
 const HomePage = () => {
   const postData = async (email, password) => {
     fetch("http://localhost:5000/createUser", {
@@ -81,78 +81,6 @@ const HomePage = () => {
   } = useContext(CartContext);
   return (
     <div className={`${styles.homePageContainer} flexCent fadeIn`}>
-      <div
-        className={`${styles.loginOverlay} flexCentCol`}
-        style={{ display: loginOverlay ? "flex" : "none" }}
-      >
-        <OverlayForm closeBoxFunction={setLoginOverlay}>
-          <h3 style={{ textAlign: "center", color: "black", margin: "0" }}>
-            Login to<br></br>your Account
-          </h3>
-          <form
-            onSubmit={(e) => {
-              handleLogin(e);
-            }}
-            className={`${styles.formIn} flexCentCol`}
-          >
-            <input
-              value={email}
-              className={styles.loginInput}
-              type="email"
-              placeholder="Enter Your Email"
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-            ></input>
-            <input
-              value={password}
-              className={styles.loginInput}
-              type="password"
-              placeholder="Enter Your Password"
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            ></input>
-            <button className={styles.submitBtn}>Submit</button>
-          </form>
-          <button
-            onClick={() => {
-              googleAuth();
-            }}
-          >
-            {" "}
-            Login with Google.
-          </button>
-        </OverlayForm>
-      </div>
-      <div
-        className={`${styles.loginOverlay} flexCentCol`}
-        style={{ display: signupOverlay ? "flex" : "none" }}
-      >
-        <OverlayForm closeBoxFunction={setSignupOverlay}>
-          <h3 style={{ textAlign: "center", color: "black", margin: "0" }}>
-            Create an Account
-          </h3>
-          <form className={`${styles.formIn} flexCentCol`}>
-            <input
-              className={styles.loginInput}
-              type="text"
-              placeholder="Enter Your Name"
-            ></input>
-            <input
-              className={styles.loginInput}
-              type="email"
-              placeholder="Enter Your Email"
-            ></input>
-            <input
-              className={styles.loginInput}
-              type="password"
-              placeholder="Enter Your Password"
-            ></input>
-            <button className={styles.submitBtn}>Submit</button>
-          </form>
-        </OverlayForm>
-      </div>
       <div className={`pageLeft half flexCent`}>
         <div className={styles.imageFrame}>
           <Image className={styles.image} src={imageSrc} layout="fill" />

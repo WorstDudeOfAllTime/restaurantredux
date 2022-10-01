@@ -1,7 +1,7 @@
 import styles from "./../styles/CartItem.module.css";
-import trash from "./delete.png";
-import plus from "./plus.png";
-import minus from "./minus.png";
+import trash from "./img/delete.png";
+import plus from "./img/plus.png";
+import minus from "./img/minus.png";
 import Image from "next/image";
 import CartContext from "./CartContext";
 import React, { useContext } from "react";

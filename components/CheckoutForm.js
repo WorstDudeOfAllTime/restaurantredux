@@ -35,7 +35,7 @@ const CheckoutForm = () => {
       setTheCity("");
       setTheAddress("");
       setTheZipcode("");
-      setTheCVC("")
+      setTheCVC("");
     } catch (err) {
       console.log(err);
     }
@@ -135,8 +135,13 @@ const CheckoutForm = () => {
             maxLength="4"
           ></input>
         </div>
-
-        <button className={styles.submitBtn}>Submit Order.</button>
+        {currentUser ? (
+          <button className={styles.submitBtn}>Submit Order.</button>
+        ) : (
+          <button className={styles.submitBtn} disabled>
+            Submit Order.
+          </button>
+        )}
       </form>
     </div>
   );

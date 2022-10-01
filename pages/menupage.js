@@ -1,7 +1,7 @@
 import styles from "./../styles/MenuPage.module.css";
 import CartContext from "../components/CartContext";
 import Image from "next/image";
-import burgerIcon from "./../components/3075977.png";
+import burgerIcon from "./../components/img/3075977.png";
 import React, { useEffect, useState, useContext } from "react";
 import Menu from "../components/Menu";
 const MenuPage = ({ allDishes }) => {

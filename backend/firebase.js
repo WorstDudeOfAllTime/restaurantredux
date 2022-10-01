@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 const firebaseConfig = {
   apiKey: "AIzaSyCI4QNqoU5I_D8iBl43b-F3DXLeL1yw_D4",
   authDomain: "restauranti-30e36.firebaseapp.com",
@@ -10,4 +11,4 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const database = getFirestore(firebaseApp);
 
-export default firebaseApp;
+export default database;

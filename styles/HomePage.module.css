@@ -45,33 +45,6 @@
 .textFrame h3 {
   margin: 0;
 }
-.loginOverlay {
-  position: fixed;
-  background: rgba(0, 0, 0, 0.6);
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  z-index: 3;
-}
-.loginInput {
-  height: 40px;
-  margin: 10px;
-}
-.loginInput:focus {
-  outline: none;
-}
-.submitBtn {
-  width: 70%;
-  height: 40px;
-}
-.formIn {
-  height: 60%;
-  width: 90%;
-  justify-content: space-around !important;
-}
 .btnContainer {
   width: 100%;
 }
