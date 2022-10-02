@@ -37,9 +37,9 @@ const HomePage = () => {
         <div className={`${styles.textFrame} flexCentCol`}>
           <h1 style={{ textAlign: "left" }}>You like food, We got food. </h1>
           <h3 style={{ textAlign: "center" }}>
-            Well, we don't directly sell food but we got a whole list of other
-            people that do sell food and you're welcome to peruse it we'll just
-            take a little off the top.
+            Well, we don&apos;t directly sell food but we got a whole list of
+            other people that do sell food and you&apos;re welcome to peruse it
+            we&apos;ll just take a little off the top.
           </h3>
           <div className={`${styles.btnContainer} flexCent`}>
             {" "}
