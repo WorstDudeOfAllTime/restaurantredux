@@ -1,15 +1,16 @@
-import styles from "./../styles/NavBar.module.css";
-import { useRouter } from "next/router";
-import CartContext from "./CartContext";
-import React, { useContext, useState } from "react";
-import OverlayForm from "./OverlayForm";
-import Image from "next/image";
-import shoppingCart from "./img/shopping-cart.png";
+import styles from './../styles/NavBar.module.css';
+import { useRouter } from 'next/router';
+import CartContext from './CartContext';
+import React, { useContext, useState } from 'react';
+import OverlayForm from './OverlayForm';
+import Image from 'next/image';
+import shoppingCart from './img/shopping-cart.png';
 const NavBar = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const {
     currentUser,
+    setCurrentUser,
     showCart,
     setShowCart,
     setLoginOverlay,
@@ -18,19 +19,73 @@ const NavBar = () => {
     signupOverlay,
   } = useContext(CartContext);
   const router = useRouter();
+
+  const postData = async (email, password) => {
+    fetch('http://localhost:5000/createUser', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email: email, password: password }),
+    });
+  };
+  const loginUser = async (email, password) => {
+    try {
+      const thisResponse = await fetch('http://localhost:5000/loginUser', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, password: password }),
+      });
+      const ressy = await thisResponse.json();
+      setCurrentUser({ name: email, password: password });
+    } catch (err) {
+      console.log(err);
+      console.log('The username or password were incorrect');
+    }
+  };
+  const googleAuth = async () => {
+    const provider = new GoogleAuthProvider();
+    const auth = getAuth();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        const user = result.user;
+        console.log(user);
+        setCurrentUser({ name: user.reloadUserInfo.email });
+        setLoginOverlay(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        console.log(errorMessage);
+        // ...
+      });
+  };
+  const handleLogin = (e) => {
+    e.preventDefault();
+    loginUser(email, password);
+  };
   return (
     <div className={`${styles.navBox} flexCent`}>
       <div className={`${styles.logoSide} flexCent`}>
         <div
           className={`${styles.loginOverlay} flexCentCol`}
-          style={{ display: loginOverlay ? "flex" : "none" }}
+          style={{ display: loginOverlay ? 'flex' : 'none' }}
         >
           <OverlayForm closeBoxFunction={setLoginOverlay}>
-            <h3 style={{ textAlign: "center", color: "black", margin: "0" }}>
+            <h3 style={{ textAlign: 'center', color: 'black', margin: '0' }}>
               Login to<br></br>your Account
             </h3>
             <form
               onSubmit={(e) => {
+                e.preventDefault();
                 handleLogin(e);
               }}
               className={`${styles.formIn} flexCentCol`}
@@ -56,21 +111,24 @@ const NavBar = () => {
               <button className={styles.submitBtn}>Submit</button>
             </form>
             <button
-              onClick={() => {
+              id={styles.google}
+              className={styles.submitBtn}
+              onClick={(e) => {
+                e.preventDefault();
                 googleAuth();
               }}
             >
-              {" "}
+              {' '}
               Login with Google.
             </button>
           </OverlayForm>
         </div>
         <div
           className={`${styles.loginOverlay} flexCentCol`}
-          style={{ display: signupOverlay ? "flex" : "none" }}
+          style={{ display: signupOverlay ? 'flex' : 'none' }}
         >
           <OverlayForm closeBoxFunction={setSignupOverlay}>
-            <h3 style={{ textAlign: "center", color: "black", margin: "0" }}>
+            <h3 style={{ textAlign: 'center', color: 'black', margin: '0' }}>
               Create an Account
             </h3>
             <form className={`${styles.formIn} flexCentCol`}>
@@ -93,7 +151,7 @@ const NavBar = () => {
             </form>
           </OverlayForm>
         </div>
-        <h1 className={styles.logo} onClick={() => router.push("/")}>
+        <h1 className={styles.logo} onClick={() => router.push('/')}>
           Worst Restaurant
         </h1>
         {currentUser ? (
@@ -101,7 +159,7 @@ const NavBar = () => {
         ) : (
           <div>
             <a
-              style={{ margin: "0px 10px" }}
+              style={{ margin: '0px 10px' }}
               href="#"
               onClick={(e) => {
                 e.preventDefault();
@@ -111,7 +169,7 @@ const NavBar = () => {
               Sign In.
             </a>
             <a
-              style={{ margin: "0px 10px" }}
+              style={{ margin: '0px 10px' }}
               href="#"
               onClick={(e) => {
                 e.preventDefault();
@@ -124,26 +182,26 @@ const NavBar = () => {
         )}
       </div>
       <div className={styles.navSide}>
-        <nav className="flexCent" style={{ width: "100%" }}>
+        <nav className="flexCent" style={{ width: '100%' }}>
           <ul
             id="navList"
             className="flexCent"
             style={{
-              width: "100%",
-              listStyle: "none",
-              justifyContent: "space-around",
+              width: '100%',
+              listStyle: 'none',
+              justifyContent: 'space-around',
             }}
           >
             <li
               className={styles.navItem}
-              onClick={() => router.push("/restaurants")}
+              onClick={() => router.push('/restaurants')}
             >
               Restaurants.
             </li>
             <li
-              style={{ display: currentUser ? "flex" : "none" }}
+              style={{ display: currentUser ? 'flex' : 'none' }}
               className={styles.navItem}
-              onClick={() => router.push("/orderHistory")}
+              onClick={() => router.push('/orderhistory')}
             >
               Order History
             </li>
