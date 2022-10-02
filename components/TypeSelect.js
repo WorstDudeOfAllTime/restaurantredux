@@ -108,9 +108,13 @@ const TypeSelect = ({ setRestaurantType }) => {
           Clear Selection
         </button>
       </div>
-      {foodTypes.map((type) => {
+      {foodTypes.map((type, index) => {
         return (
-          <TypeBox setRestaurantType={setRestaurantType} selection={type} />
+          <TypeBox
+            key={`${type}-${index}`}
+            setRestaurantType={setRestaurantType}
+            selection={type}
+          />
         );
       })}
     </div>

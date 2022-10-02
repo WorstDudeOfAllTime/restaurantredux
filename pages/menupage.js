@@ -2,8 +2,9 @@ import styles from "./../styles/MenuPage.module.css";
 import CartContext from "../components/CartContext";
 import Image from "next/image";
 import burgerIcon from "./../components/img/3075977.png";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import Menu from "../components/Menu";
+import { server } from "../config";
 const MenuPage = ({ allDishes }) => {
   const { currentRestaurant } = useContext(CartContext);
   const [restaurantSearch, setRestaurantSearch] = useState("");
@@ -32,14 +33,28 @@ const MenuPage = ({ allDishes }) => {
             <h3 className={styles.nameBoxText}>1300 S. Broad St</h3>
             <h3 className={styles.nameBoxText}>{currentRestaurant.rating}</h3>
 
-            {currentRestaurant.categories.map((category) => {
+            {currentRestaurant.categories.map((category, index) => {
               if (
                 currentRestaurant.categories.indexOf(category) ===
                 currentRestaurant.categories.length - 1
               ) {
-                return <h6 className={styles.nameBoxText}>{category}</h6>;
+                return (
+                  <h6
+                    key={`${category}-${index}`}
+                    className={styles.nameBoxText}
+                  >
+                    {category}
+                  </h6>
+                );
               } else
-                return <h6 className={styles.nameBoxText}>{category}, </h6>;
+                return (
+                  <h6
+                    key={`${category}-${index}`}
+                    className={styles.nameBoxText}
+                  >
+                    {category},{" "}
+                  </h6>
+                );
             })}
           </div>
           <div className={`${styles.searchBox} flexCentCol`}>
@@ -66,7 +81,7 @@ const MenuPage = ({ allDishes }) => {
 };
 
 export async function getServerSideProps() {
-  let response = await fetch(`http://localhost:5000/getDishes`);
+  let response = await fetch(`${server}/api/restaurant/get-dishes`);
   let data = await response.json();
   return { props: { allDishes: data } };
 }

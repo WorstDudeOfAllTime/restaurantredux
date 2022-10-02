@@ -6,11 +6,11 @@ const Menu = ({ restaurantSearch, dishList }) => {
       {restaurantSearch.length >= 1
         ? dishList
             .filter((dish) => dish.name.includes(restaurantSearch))
-            .map((item) => {
-              return <MenuItem dish={item} />;
+            .map((item, index) => {
+              return <MenuItem key={`${item.name}-${index}`} dish={item} />;
             })
-        : dishList.map((item) => {
-            return <MenuItem dish={item} />;
+        : dishList.map((item, index) => {
+            return <MenuItem key={`${item.name}-${index}`} dish={item} />;
           })}
     </div>
   );

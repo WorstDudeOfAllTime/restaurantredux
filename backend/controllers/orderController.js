@@ -1,17 +1,17 @@
-import Stripe from 'stripe';
+import Stripe from "stripe";
 const stripe = new Stripe(
-  'sk_test_51LgaA2ENX1jfCeNiIjXEZRrgOIycRgtFXf8m1Wb7pp9KotPotzxK09m8yF51V1vabbr4hn0QMKSeuSa9bJU075rp00znzIHPja'
+  "sk_test_51LgaA2ENX1jfCeNiIjXEZRrgOIycRgtFXf8m1Wb7pp9KotPotzxK09m8yF51V1vabbr4hn0QMKSeuSa9bJU075rp00znzIHPja"
 );
-import database from './../firebase.js';
-import { collection, addDoc, getDocs, query, where } from 'firebase/firestore';
+import database from "../../utils/firebase.js";
+import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
 export default {
   submitPayment: async (req, res) => {
     try {
       const token = await stripe.tokens.create({
         card: {
-          number: '4242424242424242',
-          exp_month: '12',
-          exp_year: '25',
+          number: "4242424242424242",
+          exp_month: "12",
+          exp_year: "25",
           cvc: req.body.theCVC,
         },
       });
@@ -24,19 +24,19 @@ export default {
         .then((customer) => {
           stripe.charges.create({
             amount: req.body.amount,
-            currency: 'usd',
+            currency: "usd",
             customer: customer.id,
           });
         })
         .then(() => {})
         .catch((err) => console.log(err));
 
-      let addOrder = await addDoc(collection(database, 'Orders'), {
+      let addOrder = await addDoc(collection(database, "Orders"), {
         name: req.body.email,
         amount: 400,
         restaraunt: req.body.restaurant,
-        dishes: ['this', 'That'],
-        card: '4242 4242 4242 4242',
+        dishes: ["this", "That"],
+        card: "4242 4242 4242 4242",
         address: req.body.theAddress,
         date: new Date(),
       });
@@ -48,12 +48,11 @@ export default {
     try {
       const ordersRef = await collection(database, "Orders");
 
-      const q = await query(ordersRef, where("name", "==", "kbj@yahoo.com"))
+      const q = await query(ordersRef, where("name", "==", "kbj@yahoo.com"));
       const ordersQuery = await getDocs(q);
-      ordersQuery.forEach(doc => {
-        console.log(doc.data())
-      })
-      
+      ordersQuery.forEach((doc) => {
+        console.log(doc.data());
+      });
     } catch (err) {
       console.log(err);
       res.send(err);

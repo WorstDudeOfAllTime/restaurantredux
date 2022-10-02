@@ -2,7 +2,8 @@ import styles from "./../styles/CheckoutForm.module.css";
 import { useContext, useState } from "react";
 import CartContext from "./CartContext";
 const CheckoutForm = () => {
-  const { currentUser, currentRestaurant } = useContext(CartContext);
+  const { currentUser, currentRestaurant, checkoutPrice } =
+    useContext(CartContext);
   const [cardName, setCardName] = useState("");
   const [theCardNumber, setTheCardNumber] = useState("");
   const [theState, setTheState] = useState("");
@@ -13,7 +14,7 @@ const CheckoutForm = () => {
 
   const submitPayment = async () => {
     try {
-      fetch("http://localhost:5000/sendPayment", {
+      fetch("/api/order/submit-payment", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -27,6 +28,7 @@ const CheckoutForm = () => {
           theZipcode,
           restaurant: currentRestaurant,
           theCVC,
+          amount: checkoutPrice,
         }),
       });
       setCardName("");

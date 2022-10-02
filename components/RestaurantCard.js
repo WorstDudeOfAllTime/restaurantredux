@@ -34,13 +34,13 @@ const RestaurantCard = ({ restaurant }) => {
           <h3>{restaurant.name}</h3>
           <h4>{restaurant.rating}</h4>
           <div className={`flexCent`}>
-            {restaurant.categories.map((category) => {
+            {restaurant.categories.map((category, index) => {
               if (
                 restaurant.categories.indexOf(category) ===
                 restaurant.categories.length - 1
               ) {
-                return <h6>{category}</h6>;
-              } else return <h6>{category}, </h6>;
+                return <h6 key={`${category}-${index}`}>{category}</h6>;
+              } else return <h6 key={`${category}-${index}`}>{category}, </h6>;
             })}
           </div>
         </div>

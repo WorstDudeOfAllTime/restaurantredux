@@ -20,8 +20,8 @@ const Cart = () => {
       <div className={`${styles.cart} flexCentCol`}>
         {shoppingCart
           .filter((merch) => merch.quantity != 0)
-          .map((item) => {
-            return <CartItem dish={item} />;
+          .map((item, index) => {
+            return <CartItem key={`${item.name}-${index}`} dish={item} />;
           })}
       </div>
 
