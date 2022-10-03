@@ -2,18 +2,32 @@ import styles from "./../styles/MenuPage.module.css";
 import CartContext from "../components/CartContext";
 import Image from "next/image";
 import burgerIcon from "./../components/img/3075977.png";
-import React, { useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Menu from "../components/Menu";
-import { server } from "../config";
-const MenuPage = ({ allDishes }) => {
+const MenuPage = () => {
   const { currentRestaurant } = useContext(CartContext);
+  const [allDishes, setAllDishes] = useState([])
   const [restaurantSearch, setRestaurantSearch] = useState("");
+useEffect(()=> {
+  const pullDishes = async () =>{
+    let response = await fetch(`/api/restaurant/get-dishes`);
+    let data = await response.json();
+    setAllDishes(data);
+  }
+  pullDishes();
+}, [])
+
   let sortedDishes = allDishes.filter(
     (dish) =>
       dish.type === currentRestaurant.categories[0] ||
       dish.type === currentRestaurant.categories[1] ||
       dish.type === currentRestaurant.categories[2]
   );
+
+    if(!currentRestaurant || !currentRestaurant.categories){
+      return null;
+    }
+
   return (
     <div className={`${styles.menuPageContainer} flexCentCol`}>
       <div
@@ -79,11 +93,5 @@ const MenuPage = ({ allDishes }) => {
     </div>
   );
 };
-
-export async function getServerSideProps() {
-  let response = await fetch(`${server}/api/restaurant/get-dishes`);
-  let data = await response.json();
-  return { props: { allDishes: data } };
-}
 
 export default MenuPage;
