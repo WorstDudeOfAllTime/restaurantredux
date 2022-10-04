@@ -19,3 +19,8 @@
 .loginInput:focus {
   outline: none;
 }
+@media screen and (max-width: 900px) {
+  .overlayFormContainer {
+    width: 60vw;
+  }
+}

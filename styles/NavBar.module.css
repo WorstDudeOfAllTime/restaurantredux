@@ -39,6 +39,7 @@
   z-index: 3;
 }
 .loginInput {
+  width: 60%;
   height: 40px;
   margin: 10px;
 }
@@ -46,10 +47,10 @@
   outline: none;
 }
 .submitBtn {
-  width: 70%;
+  width: 60%;
   height: 40px;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 1.3vw;
   margin: 10px;
   box-shadow: 1px 1px 3px black;
   cursor: pointer;
@@ -59,13 +60,41 @@
   width: 90%;
   justify-content: space-around !important;
 }
-#google{
-  background: rgb(246, 102, 102);
-  border:none;
-  border-radius: 3px;
-  text-shadow: 0px 1px 2px black;
-  font-size: 17px;
+#google {
+  background: rgb(255, 56, 56);
 }
-#google:hover{
-  background: rgb(251, 150, 150);
+#google:hover {
+  background: rgb(255, 85, 85);
+}
+@media screen and (max-width: 750px) {
+  .submitBtn {
+    font-size: 13px;
+  }
+  .userDisplay {
+    font-size: 13px;
+  }
+  .logo {
+    font-size: 15px;
+    margin: 0;
+  }
+  .logoSide {
+    width: 60%;
+    flex-direction: column;
+    align-items: flex-start !important;
+    margin-left: 10px;
+  }
+  .logoSide a {
+    margin: "0px 3px";
+  }
+  .navSide {
+    width: 40%;
+  }
+}
+@media screen and (max-width: 850px) {
+  .navBox {
+    width: 100%;
+  }
+  .navSide {
+    margin-right: 10px;
+  }
 }

@@ -12,9 +12,6 @@
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 1);
   transition: 0.2s;
 }
-.menuItemLeft {
-  align-items: flex-start !important;
-}
 .menuItemRight {
   justify-content: flex-end !important;
 }
@@ -25,12 +22,21 @@
   align-items: flex-start !important;
 }
 .priceBox {
-  height: 50px;
-  width: 50px;
+  height: 45px;
+  width: 45px;
   border-radius: 50%;
-  background-color: rgba(245, 245, 245, 0.75);
+  background-color: rgb(255, 255, 255);
   color: black;
   font-size: 15px;
   font-weight: bold;
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+  margin-top: 3px;
+  margin-right: 3px;
+}
+@media screen and (max-width: 750px) {
+  .menuItemContainer {
+    height: 90px;
+    font-size: 5px;
+    width: 90%;
+  }
 }

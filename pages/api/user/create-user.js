@@ -1,4 +1,5 @@
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import database from "../../../utils/firebase";
 export default async function handler(req, res) {
   try {
     const auth = getAuth();

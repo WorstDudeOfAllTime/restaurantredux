@@ -28,7 +28,7 @@
   color: black;
   text-align: left;
 }
-.catWrap{
+.catWrap {
   display: flex;
   width: 100%;
 }
@@ -46,4 +46,9 @@
   box-shadow: 0px 1px 3px black;
   color: black;
   font-size: 15px;
+}
+@media screen and (max-width: 750px) {
+  .searchBar {
+    width: 145px;
+  }
 }

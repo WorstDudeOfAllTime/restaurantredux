@@ -6,10 +6,7 @@ const imageSrc =
   "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80";
 
 const HomePage = () => {
-  const {
-    setLoginOverlay,
-    setSignupOverlay,
-  } = useContext(CartContext);
+  const { setLoginOverlay, setSignupOverlay } = useContext(CartContext);
   return (
     <div className={`${styles.homePageContainer} flexCent fadeIn`}>
       <div className={`pageLeft half flexCent`}>
@@ -19,8 +16,8 @@ const HomePage = () => {
       </div>
       <div className={`pageRight half flexCentCol`}>
         <div className={`${styles.textFrame} flexCentCol`}>
-          <h1 style={{ textAlign: "left" }}>You like food, We got food. </h1>
-          <h3 style={{ textAlign: "center" }}>
+          <h1 className={styles.mainHeader}>You like food, We got food. </h1>
+          <h3 className={styles.mainSubHeader}>
             Well, we don&apos;t directly sell food but we got a whole list of
             other people that do sell food and you&apos;re welcome to peruse it
             we&apos;ll just take a little off the top.

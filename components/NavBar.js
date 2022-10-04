@@ -5,9 +5,14 @@ import React, { useContext, useState } from "react";
 import OverlayForm from "./OverlayForm";
 import Image from "next/image";
 import shoppingCart from "./img/shopping-cart.png";
+import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
+import { datbase, firebaseApp } from "./../utils/firebase";
 const NavBar = () => {
+  console.log(typeof process.env.DB_APIKEY);
+  console.log(typeof process.env.DB_APPID);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const provider = new GoogleAuthProvider();
   const {
     currentUser,
     setCurrentUser,
@@ -20,14 +25,18 @@ const NavBar = () => {
   } = useContext(CartContext);
   const router = useRouter();
 
-  const postData = async (email, password) => {
-    fetch("/api/user/create-user", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email: email, password: password }),
-    });
+  const createUser = async (email, password) => {
+    try {
+      fetch("/api/user/create-user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: email, password: password }),
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
   const loginUser = async (email, password) => {
     try {
@@ -43,31 +52,6 @@ const NavBar = () => {
       console.log("The username or password were incorrect");
     }
   };
-  const googleAuth = async () => {
-    const provider = new GoogleAuthProvider();
-    const auth = getAuth();
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        const user = result.user;
-        console.log(user);
-        setCurrentUser({ name: user.reloadUserInfo.email });
-        setLoginOverlay(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        console.log(errorMessage);
-        // ...
-      });
-  };
   const handleLogin = (e) => {
     e.preventDefault();
     loginUser(email, password);
@@ -80,7 +64,14 @@ const NavBar = () => {
           style={{ display: loginOverlay ? "flex" : "none" }}
         >
           <OverlayForm closeBoxFunction={setLoginOverlay}>
-            <h3 style={{ textAlign: "center", color: "black", margin: "0" }}>
+            <h3
+              style={{
+                textAlign: "center",
+                color: "black",
+                margin: "0",
+                fontSize: "1.3vw",
+              }}
+            >
               Login to<br></br>your Account
             </h3>
             <form
@@ -112,10 +103,25 @@ const NavBar = () => {
             </form>
             <button
               id={styles.google}
+              style={{
+                border: "none",
+                borderRadius: "3px",
+              }}
               className={styles.submitBtn}
               onClick={(e) => {
                 e.preventDefault();
-                googleAuth();
+                const auth = getAuth();
+                console.log(auth);
+                signInWithPopup(auth, provider)
+                  .then((result) => {
+                    const credential =
+                      GoogleAuthProvider.credentialFromResult(result);
+                    const token = credential.accessToken;
+                    const user = result.user;
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  });
               }}
             >
               {" "}
@@ -128,24 +134,45 @@ const NavBar = () => {
           style={{ display: signupOverlay ? "flex" : "none" }}
         >
           <OverlayForm closeBoxFunction={setSignupOverlay}>
-            <h3 style={{ textAlign: "center", color: "black", margin: "0" }}>
+            <h3
+              style={{
+                textAlign: "center",
+                color: "black",
+                margin: "0",
+                fontSize: "1.3vw",
+              }}
+            >
               Create an Account
             </h3>
-            <form className={`${styles.formIn} flexCentCol`}>
+            <form
+              className={`${styles.formIn} flexCentCol`}
+              onSubmit={(e) => {
+                e.preventDefault();
+                createUser();
+              }}
+            >
               <input
                 className={styles.loginInput}
                 type="text"
                 placeholder="Enter Your Name"
               ></input>
               <input
+                value={email}
                 className={styles.loginInput}
                 type="email"
                 placeholder="Enter Your Email"
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
               ></input>
               <input
+                value={password}
                 className={styles.loginInput}
                 type="password"
                 placeholder="Enter Your Password"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
               ></input>
               <button className={styles.submitBtn}>Submit</button>
             </form>
@@ -155,7 +182,7 @@ const NavBar = () => {
           Worst Restaurant
         </h1>
         {currentUser ? (
-          <h2>Hello, {currentUser.name}</h2>
+          <h2 className={styles.userDisplay}>Hello, {currentUser.name}!</h2>
         ) : (
           <div>
             <a

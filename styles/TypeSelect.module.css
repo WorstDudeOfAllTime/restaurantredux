@@ -6,3 +6,11 @@
 .clearIt {
   width: 100%;
 }
+@media screen and (max-width: 900px) {
+  .selectionContainer {
+    font-size: 13px;
+    width: 100%;
+    overflow: hidden;
+    overflow-y: auto;
+  }
+}
