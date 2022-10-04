@@ -6,7 +6,7 @@ import OverlayForm from "./OverlayForm";
 import Image from "next/image";
 import shoppingCart from "./img/shopping-cart.png";
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
-import { datbase, firebaseApp } from "./../utils/firebase";
+import { database, firebaseApp } from "./../utils/firebase";
 const NavBar = () => {
   console.log(typeof process.env.DB_APIKEY);
   console.log(typeof process.env.DB_APPID);
@@ -111,11 +111,13 @@ const NavBar = () => {
               onClick={(e) => {
                 e.preventDefault();
                 const auth = getAuth();
-                console.log(auth);
+                console.log(`auth ${auth}`);
+                console.log(`provider ${provider}`);
                 signInWithPopup(auth, provider)
                   .then((result) => {
                     const credential =
                       GoogleAuthProvider.credentialFromResult(result);
+                    console.log(credential);
                     const token = credential.accessToken;
                     const user = result.user;
                   })
@@ -124,7 +126,6 @@ const NavBar = () => {
                   });
               }}
             >
-              {" "}
               Login with Google.
             </button>
           </OverlayForm>
