@@ -88,7 +88,6 @@ const MenuPage = () => {
               value={restaurantSearch}
               onChange={(e) => {
                 setRestaurantSearch(e.target.value);
-                console.log(restaurantSearch);
               }}
             ></input>
           </div>

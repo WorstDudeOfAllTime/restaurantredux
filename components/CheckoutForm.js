@@ -51,6 +51,13 @@ const CheckoutForm = () => {
       console.log(err);
     }
   };
+  const validateCardNum = (cardNum) => {
+    if (cardNum.match(/^[0-9]+$/) === null) {
+      setSuccessMessage("Invalid Card Number");
+      return false;
+    }
+    return true;
+  };
   return (
     <div className={`${styles.checkoutFormContainer} flexCentCol`}>
       <form
@@ -63,6 +70,7 @@ const CheckoutForm = () => {
         }}
         onSubmit={(e) => {
           e.preventDefault();
+          if (!validateCardNum(theCardNumber)) return;
           submitPayment();
         }}
         className={`flexCentCol`}
@@ -129,6 +137,7 @@ const CheckoutForm = () => {
             id="cardNumber"
             type="text"
             placeholder="Card Number"
+            maxLength="16"
             onChange={(e) => {
               setTheCardNumber(e.target.value);
             }}

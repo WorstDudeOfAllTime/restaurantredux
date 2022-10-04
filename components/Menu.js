@@ -5,7 +5,11 @@ const Menu = ({ restaurantSearch, dishList }) => {
     <div className={`${styles.menuContainer} flexCent`}>
       {restaurantSearch.length >= 1
         ? dishList
-            .filter((dish) => dish.name.includes(restaurantSearch))
+            .filter(
+              (dish) =>
+                dish.name.includes(restaurantSearch) ||
+                dish.name.toLowerCase().includes(restaurantSearch)
+            )
             .map((item, index) => {
               return <MenuItem key={`${item.name}-${index}`} dish={item} />;
             })

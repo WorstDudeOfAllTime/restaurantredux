@@ -26,13 +26,25 @@ const NavBar = () => {
 
   const createUser = async (email, password) => {
     try {
-      fetch("/api/user/create-user", {
+      const response = await fetch("/api/user/create-user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ email: email, password: password }),
       });
+      const data = await response.json();
+      if (data) {
+        setSuccessMessage(
+          "User Created Successfully! You may now Login. Window will close in 3 seconds"
+        );
+        setTimeout(() => {
+          setSignupOverlay(false);
+          setSuccessMessage("");
+        }, 3000);
+      } else {
+        setSuccessMessage("something went wrong");
+      }
     } catch (err) {
       console.log(err);
     }
@@ -68,6 +80,9 @@ const NavBar = () => {
       const ressy = await thisResponse.json();
       if (ressy.code === "auth/wrong-password") {
         setSuccessMessage("Invalid username or password");
+        setTimeout(() => {
+          setSuccessMessage("");
+        }, 3000);
       } else {
         setCurrentUser({ name: email });
         setEmail("");
@@ -77,12 +92,12 @@ const NavBar = () => {
         );
         setTimeout(() => {
           setLoginOverlay(false);
+          setSuccessMessage("");
         }, 3000);
       }
     } catch (err) {
       setSuccessMessage("Username or Password was not found");
       console.log(err);
-      console.log("NOPE");
     }
   };
   const signOut = async () => {
@@ -209,6 +224,7 @@ const NavBar = () => {
               <button className={styles.submitBtn}>Submit</button>
             </form>
           </OverlayForm>
+          <div>{successMessage ? successMessage : null}</div>
         </div>
         <h1 className={styles.logo} onClick={() => router.push("/")}>
           Worst Restaurant
