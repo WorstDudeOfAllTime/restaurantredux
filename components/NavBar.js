@@ -6,7 +6,7 @@ import OverlayForm from "./OverlayForm";
 import Image from "next/image";
 import shoppingCart from "./img/shopping-cart.png";
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
-import { database, firebaseApp } from "./../utils/firebase";
+import database from "./../utils/firebase";
 const NavBar = () => {
   console.log(typeof process.env.DB_APIKEY);
   console.log(typeof process.env.DB_APPID);
