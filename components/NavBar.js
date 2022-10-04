@@ -6,10 +6,9 @@ import OverlayForm from "./OverlayForm";
 import Image from "next/image";
 import shoppingCart from "./img/shopping-cart.png";
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
-import database from "./../utils/firebase";
+import { database, firebaseApp } from "./../utils/firebase";
 const NavBar = () => {
-  console.log(typeof process.env.DB_APIKEY);
-  console.log(typeof process.env.DB_APPID);
+  const [successMessage, setSuccessMessage] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const provider = new GoogleAuthProvider();
@@ -38,6 +37,21 @@ const NavBar = () => {
       console.log(err);
     }
   };
+
+  const googleLogin = () => {
+    const auth = getAuth();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        console.log(credential);
+        const token = credential.accessToken;
+        const user = result.user;
+        setCurrentUser({ name: user.email });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const loginUser = async (email, password) => {
     try {
       const thisResponse = await fetch("/api/user/login-user", {
@@ -46,7 +60,7 @@ const NavBar = () => {
         body: JSON.stringify({ email: email, password: password }),
       });
       const ressy = await thisResponse.json();
-      setCurrentUser({ name: email, password: password });
+      setCurrentUser({ name: email });
     } catch (err) {
       console.log(err);
       console.log("The username or password were incorrect");
@@ -55,6 +69,10 @@ const NavBar = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     loginUser(email, password);
+  };
+  const handleCreate = (e) => {
+    e.preventDefault();
+    createUser(email, password);
   };
   return (
     <div className={`${styles.navBox} flexCent`}>
@@ -76,7 +94,6 @@ const NavBar = () => {
             </h3>
             <form
               onSubmit={(e) => {
-                e.preventDefault();
                 handleLogin(e);
               }}
               className={`${styles.formIn} flexCentCol`}
@@ -110,22 +127,10 @@ const NavBar = () => {
               className={styles.submitBtn}
               onClick={(e) => {
                 e.preventDefault();
-                const auth = getAuth();
-                console.log(`auth ${auth}`);
-                console.log(`provider ${provider}`);
-                signInWithPopup(auth, provider)
-                  .then((result) => {
-                    const credential =
-                      GoogleAuthProvider.credentialFromResult(result);
-                    console.log(credential);
-                    const token = credential.accessToken;
-                    const user = result.user;
-                  })
-                  .catch((error) => {
-                    console.log(error);
-                  });
+                googleLogin();
               }}
             >
+              {" "}
               Login with Google.
             </button>
           </OverlayForm>
@@ -148,15 +153,9 @@ const NavBar = () => {
             <form
               className={`${styles.formIn} flexCentCol`}
               onSubmit={(e) => {
-                e.preventDefault();
-                createUser();
+                handleCreate(e);
               }}
             >
-              <input
-                className={styles.loginInput}
-                type="text"
-                placeholder="Enter Your Name"
-              ></input>
               <input
                 value={email}
                 className={styles.loginInput}

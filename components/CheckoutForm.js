@@ -2,8 +2,13 @@ import styles from "./../styles/CheckoutForm.module.css";
 import { useContext, useState } from "react";
 import CartContext from "./CartContext";
 const CheckoutForm = () => {
-  const { currentUser, currentRestaurant, checkoutPrice } =
-    useContext(CartContext);
+  const {
+    currentUser,
+    currentRestaurant,
+    checkoutPrice,
+    shoppingCart,
+    setShoppingCart,
+  } = useContext(CartContext);
   const [cardName, setCardName] = useState("");
   const [theCardNumber, setTheCardNumber] = useState("");
   const [theState, setTheState] = useState("");
@@ -11,9 +16,10 @@ const CheckoutForm = () => {
   const [theAddress, setTheAddress] = useState("");
   const [theZipcode, setTheZipcode] = useState("");
   const [theCVC, setTheCVC] = useState("");
-
+  const [successMessage, setSuccessMessage] = useState("");
   const submitPayment = async () => {
     try {
+      setShoppingCart(shoppingCart.filter((item) => item.quantity != 0));
       fetch("/api/order/submit-payment", {
         method: "POST",
         headers: {
@@ -22,6 +28,7 @@ const CheckoutForm = () => {
         body: JSON.stringify({
           name: cardName,
           email: currentUser.name,
+          dishes: shoppingCart,
           theAddress,
           theCity,
           theState,
@@ -31,6 +38,7 @@ const CheckoutForm = () => {
           amount: checkoutPrice,
         }),
       });
+      setSuccessMessage("Your order will be ready shortly!");
       setCardName("");
       setTheCardNumber("");
       setTheState("");
@@ -38,11 +46,11 @@ const CheckoutForm = () => {
       setTheAddress("");
       setTheZipcode("");
       setTheCVC("");
+      setShoppingCart([]);
     } catch (err) {
       console.log(err);
     }
   };
-
   return (
     <div className={`${styles.checkoutFormContainer} flexCentCol`}>
       <form
@@ -145,6 +153,11 @@ const CheckoutForm = () => {
           </button>
         )}
       </form>
+      <div>
+        {successMessage ? (
+          <h1 style={{ color: "black" }}>{successMessage}</h1>
+        ) : null}
+      </div>
     </div>
   );
 };

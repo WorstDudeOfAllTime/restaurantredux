@@ -6,6 +6,10 @@ import database from "../../../utils/firebase";
 import { collection, addDoc } from "firebase/firestore";
 export default async function handler(req, res) {
   try {
+    let orderArray = [];
+    req.body.dishes.forEach((item) => {
+      orderArray.push(item);
+    });
     const token = await stripe.tokens.create({
       card: {
         number: "4242424242424242",
@@ -33,8 +37,8 @@ export default async function handler(req, res) {
     let addOrder = await addDoc(collection(database, "Orders"), {
       name: req.body.email,
       amount: req.body.amount.toFixed(2),
-      restaraunt: req.body.restaurant,
-      dishes: ["this", "That"],
+      restaurant: req.body.restaurant,
+      dishes: orderArray,
       card: "4242 4242 4242 4242",
       address: req.body.theAddress,
       date: new Date(),

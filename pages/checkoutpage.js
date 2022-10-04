@@ -12,9 +12,11 @@ const CheckoutPage = () => {
       </div>
       <div className={`${styles.checkoutRight} half pageRight flexCent`}>
         <div className={`${styles.cartEnclosure} flexCentCol`}>
-          {shoppingCart.map((dish, index) => {
-            return <CartItem key={`${dish.name}-${index}`} dish={dish} />;
-          })}
+          {shoppingCart
+            .filter((dish) => dish.quantity != 0)
+            .map((dish, index) => {
+              return <CartItem key={`${dish.name}-${index}`} dish={dish} />;
+            })}
         </div>
       </div>
     </div>
