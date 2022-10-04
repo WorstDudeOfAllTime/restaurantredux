@@ -47,6 +47,12 @@ const NavBar = () => {
         const token = credential.accessToken;
         const user = result.user;
         setCurrentUser({ name: user.email });
+        setSuccessMessage(
+          "You have logged in successfully. Window will close in 3 seconds"
+        );
+        setTimeout(() => {
+          setLoginOverlay(false);
+        }, 3000);
       })
       .catch((error) => {
         console.log(error);
@@ -60,11 +66,36 @@ const NavBar = () => {
         body: JSON.stringify({ email: email, password: password }),
       });
       const ressy = await thisResponse.json();
-      setCurrentUser({ name: email });
+      if (ressy.code === "auth/wrong-password") {
+        setSuccessMessage("Invalid username or password");
+      } else {
+        setCurrentUser({ name: email });
+        setEmail("");
+        setPassword("");
+        setSuccessMessage(
+          "You have logged in successfully. Window will close in 3 seconds"
+        );
+        setTimeout(() => {
+          setLoginOverlay(false);
+        }, 3000);
+      }
+    } catch (err) {
+      setSuccessMessage("Username or Password was not found");
+      console.log(err);
+      console.log("NOPE");
+    }
+  };
+  const signOut = async () => {
+    try {
+      const signoutCall = await fetch("/api/user/sign-out-user");
     } catch (err) {
       console.log(err);
-      console.log("The username or password were incorrect");
     }
+  };
+  const handleSignOut = (e) => {
+    e.preventDefault();
+    signOut();
+    setCurrentUser(null);
   };
   const handleLogin = (e) => {
     e.preventDefault();
@@ -134,6 +165,7 @@ const NavBar = () => {
               Login with Google.
             </button>
           </OverlayForm>
+          <div>{successMessage ? successMessage : null}</div>
         </div>
         <div
           className={`${styles.loginOverlay} flexCentCol fadeIn`}
@@ -182,7 +214,16 @@ const NavBar = () => {
           Worst Restaurant
         </h1>
         {currentUser ? (
-          <h2 className={styles.userDisplay}>Hello, {currentUser.name}!</h2>
+          <div>
+            <h2 className={styles.userDisplay}>Hello, {currentUser.name}!</h2>
+            <button
+              onClick={(e) => {
+                handleSignOut(e);
+              }}
+            >
+              LogOut.
+            </button>
+          </div>
         ) : (
           <div>
             <a

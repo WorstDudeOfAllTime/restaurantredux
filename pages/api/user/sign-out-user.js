@@ -5,6 +5,7 @@ export default async function handler(req, res) {
     signOut(auth)
       .then(() => {
         console.log("You have signed out.");
+        res.send();
       })
       .catch(error);
   } catch (err) {}

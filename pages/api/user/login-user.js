@@ -10,10 +10,9 @@ export default async function handler(req, res) {
         res.send(user);
       })
       .catch((error) => {
-        console.log(error);
-        console.log(req.body);
         const errorCode = error.code;
         const errorMessage = error.message;
+        res.send(error);
       });
   } catch (err) {}
 }
