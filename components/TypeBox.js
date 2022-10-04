@@ -1,16 +1,15 @@
-import Image from "next/image";
 const TypeBox = ({ setRestaurantType, selection }) => {
   return (
     <div
       className={`flexCent`}
       style={{
-        height: "50px",
+        height: "45px",
         width: "45%",
         color: "black",
         background: "rgb(149, 147, 255)",
         borderRadius: "3px",
         boxShadow: "2px 2px 6px rgba(0, 0, 0, .5)",
-        margin: "0px 5px",
+        margin: "3px 5px",
         justifyContent: "space-around",
         cursor: "pointer",
       }}

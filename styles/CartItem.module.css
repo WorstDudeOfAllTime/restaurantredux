@@ -7,17 +7,19 @@
 }
 
 .nameInfo {
-  height: 100%;
-  width: 36%;
+  height: auto;
+  width: 50%;
   align-items: flex-start !important;
+  font-size: 13px;
+  margin-left: 10px;
 }
 .quantity {
   height: 100%;
-  width: 26%;
+  width: 15%;
 }
 .btnRow {
   height: 100%;
-  width: 26%;
+  width: 30%;
   justify-content: space-around !important;
 }
 .btnRowImage {

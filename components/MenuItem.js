@@ -1,5 +1,5 @@
 import styles from "./../styles/MenuItem.module.css";
-import React, { useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import CartContext from "./CartContext";
 const MenuItem = ({ dish }) => {
   const { shoppingCart, setShoppingCart, checkoutPrice, setCheckoutPrice } =
@@ -28,7 +28,7 @@ const MenuItem = ({ dish }) => {
       }}
     >
       <div className={`${styles.menuItemLeft} half flexCentCol`}>
-        <h3 style={{ marginLeft: "10px" }}>{dish.name}</h3>
+        <h3 style={{ marginLeft: "10px", fontSize: 'calc(10px + 0.390625vw)' }}>{dish.name}</h3>
         <p style={{ marginLeft: "10px" }}>{dish.description}</p>
       </div>
       <div className={`${styles.menuItemRight} half flexCent`}>

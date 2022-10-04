@@ -1,8 +1,7 @@
-import styles from "./../styles/RestaurantCard.module.css";
-import React, { useContext, useState } from "react";
-import CartContext from "./CartContext";
-import Image from "next/image";
-import Link from "next/link";
+import styles from './../styles/RestaurantCard.module.css';
+import React, { useContext } from 'react';
+import CartContext from './CartContext';
+import Link from 'next/link';
 const RestaurantCard = ({ restaurant }) => {
   const {
     setCurrentRestaurant,
@@ -23,16 +22,22 @@ const RestaurantCard = ({ restaurant }) => {
         }}
       >
         <div className={`${styles.infoBox} flexCentCol`}>
-          <div>
+          <div style={{ height: '100%', width: '100%'}} className={'flexCent'}>
             <img
               src={restaurant.image}
-              style={{ marginLeft: "20px", height: "120px", width: "auto" }}
+              style={{
+                marginLeft: '20px',
+                height: 'auto',
+                width: 'auto',
+                maxHeight: '80%',
+                maxWidth: '80%',
+              }}
             />
           </div>
         </div>
-        <div className={`${styles.infoBox} flexCentCol`}>
+        <div className={`${styles.descBox} flexCentCol`}>
           <h3>{restaurant.name}</h3>
-          <h4>{restaurant.rating}</h4>
+          <h4>Rating: {restaurant.rating}</h4>
           <div className={`flexCent`}>
             {restaurant.categories.map((category, index) => {
               if (
@@ -44,7 +49,6 @@ const RestaurantCard = ({ restaurant }) => {
             })}
           </div>
         </div>
-        <div className={`${styles.descBox} flexCentCol`}></div>
       </div>
     </Link>
   );

@@ -1,7 +1,7 @@
 import styles from "./../styles/Cart.module.css";
 import CartItem from "./CartItem";
 import Link from "next/link";
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import CartContext from "./CartContext";
 const Cart = () => {
   const { checkoutPrice, shoppingCart, showCart, setShowCart } =

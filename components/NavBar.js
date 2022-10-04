@@ -76,7 +76,7 @@ const NavBar = () => {
     <div className={`${styles.navBox} flexCent`}>
       <div className={`${styles.logoSide} flexCent`}>
         <div
-          className={`${styles.loginOverlay} flexCentCol`}
+          className={`${styles.loginOverlay} flexCentCol fadeIn`}
           style={{ display: loginOverlay ? "flex" : "none" }}
         >
           <OverlayForm closeBoxFunction={setLoginOverlay}>
@@ -124,7 +124,7 @@ const NavBar = () => {
           </OverlayForm>
         </div>
         <div
-          className={`${styles.loginOverlay} flexCentCol`}
+          className={`${styles.loginOverlay} flexCentCol fadeIn`}
           style={{ display: signupOverlay ? "flex" : "none" }}
         >
           <OverlayForm closeBoxFunction={setSignupOverlay}>
